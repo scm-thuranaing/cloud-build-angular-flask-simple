@@ -17,48 +17,63 @@ steps:
   # Install dependencies
   - name: node:14
     entrypoint: npm
-    args: ['install']
-    dir: HTML
+    args: ["install", "--prefix", "HTML"]
+    id: "dependencies-install"
   # install angular cli
   - name: node:14
     entrypoint: npm
-    args: ['install', '-g',  '@angular/cli']
+    args: ["install", "-g", "@angular/cli"]
+    id: "angular-cli-install"
   # build angular
   - name: node:14
-    entrypoint: bash
-    args: ['node_modules/.bin/ng', 'build']
+    entrypoint: npm
+    args: ['run','ng','build']
     dir: HTML
-  # deploy angular
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'bash'
-    args: ['-c', 'gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy app.yaml --no-promote']
-    dir: HTML
-    timeout: '1600s'
-# [END cloudbuild_angular]
+    waitFor: ["dependencies-install", "angular-cli-install"]
 
-# [START cloudbuild_python_dependencies_yaml]
+  # deploy angular
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "bash"
+    args:
+      [
+        "-c",
+        "gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy app.yaml --no-promote",
+      ]
+    dir: HTML
+    timeout: "1600s"
+  # [END cloudbuild_angular]
+
+  # [START cloudbuild_python_dependencies_yaml]
   # Install dependencies
   - name: python
     entrypoint: pip
     args: ["install", "-r", "requirements.txt", "--user"]
     dir: backend
-# [END cloudbuild_python_dependencies_yaml]
+  # [END cloudbuild_python_dependencies_yaml]
 
-# [START cloudbuild_python_image_yaml]
+  # [START cloudbuild_python_image_yaml]
   # Docker Build
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ["build", '--cache-from', 'gcr.io/${PROJECT_ID}/${_SERVICE_NAME}:latest', "-t", "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}", ".", ]
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "--cache-from",
+        "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}:latest",
+        "-t",
+        "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}",
+        ".",
+      ]
     dir: backend
-# [END cloudbuild_python_image_yaml]
+  # [END cloudbuild_python_image_yaml]
 
-# [START cloudbuild_python_push_yaml]
+  # [START cloudbuild_python_push_yaml]
   # Docker push to container images
   - name: "gcr.io/cloud-builders/docker"
     args: ["push", "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}"]
     dir: backend
-# [END cloudbuild_python_push_yaml]
-  
-# [START cloudbuild_python_deploy_yaml]
+  # [END cloudbuild_python_push_yaml]
+
+  # [START cloudbuild_python_deploy_yaml]
   # Deploy to Cloud Run
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: gcloud
