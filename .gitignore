@@ -1,14 +1,14 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/frontend/dist
-/frontend/tmp
-/frontend/out-tsc
+/HTML/dist
+/HTML/tmp
+/HTML/out-tsc
 # Only exists if Bazel was run
-/frontend/bazel-out
+/HTML/bazel-out
 
 # dependencies
-/frontend/node_modules
+/HTML/node_modules
 
 # profiling files
 chrome-profiler-events.json
