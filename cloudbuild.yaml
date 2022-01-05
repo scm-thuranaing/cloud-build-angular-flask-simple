@@ -17,7 +17,8 @@ steps:
   # Install dependencies
   - name: node:14
     entrypoint: npm
-    args: ['install', '--prefix',  'frontend']
+    args: ['install']
+    dir: HTML
   # install angular cli
   - name: node:14
     entrypoint: npm
@@ -26,12 +27,12 @@ steps:
   - name: node:14
     entrypoint: bash
     args: ['node_modules/.bin/ng', 'build']
-    dir: frontend
+    dir: HTML
   # deploy angular
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
     args: ['-c', 'gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy app.yaml --no-promote']
-    dir: frontend
+    dir: HTML
     timeout: '1600s'
 # [END cloudbuild_angular]
 

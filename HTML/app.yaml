@@ -1,0 +1,36 @@
+# version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+
+handlers:
+- url: /favicon\.ico
+  static_files: dist/frontend/favicon.ico
+  upload: dist/frontend/favicon\.ico
+
+- url: /api/.*
+  script: src.main.app
+
+- url: /(.*\.(gif|png|jpeg|jpg|svg|css|js|ico|woff|woff2|map|ttf|otf))$
+  static_files: dist/frontend/\1
+  upload: dist/frontend/(.*)
+
+- url: /(.*)
+  static_files: dist/frontend/index.html
+  upload: dist/frontend/index.html
+
+
+skip_files:
+- src/
+- node_modules/
+- e2e/
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+
+libraries:
+- name: ssl
+  version: latest
