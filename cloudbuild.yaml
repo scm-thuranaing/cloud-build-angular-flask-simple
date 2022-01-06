@@ -88,10 +88,16 @@ steps:
         "asia-southeast1",
         "--platform",
         "managed",
+        '--set-env-vars', 'PUBSUB_VERIFICATION_TOKEN=${_PUBSUB_VERIFICATION_TOKEN}',
+        '--set-env-vars', 'PUBSUB_TOPIC=${_PUBSUB_TOPIC}',
+        '--set-env-vars', 'GOOGLE_CLOUD_PROJECT=${_GOOGLE_CLOUD_PROJECT}',
         "--allow-unauthenticated",
       ]
     dir: backend
 # [END cloudbuild_python_deploy_yaml]
 substitutions:
   _SERVICE_NAME: test-scm-google-cloud
+  _PUBSUB_VERIFICATION_TOKEN: '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
+  _PUBSUB_TOPIC: 'scm-topic-06-01-2022'
+  _GOOGLE_CLOUD_PROJECT: 'hybrid-cabinet-336703'
 # [END cloudbuild_python_yaml]
