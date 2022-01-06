@@ -1,0 +1,44 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# [START cloudbuild_angular]
+steps:
+  # Install dependencies
+  - name: node:14
+    entrypoint: npm
+    args: ["install", "--prefix", "HTML"]
+    id: "dependencies-install"
+  # install angular cli
+  - name: node:14
+    entrypoint: npm
+    args: ["install", "-g", "@angular/cli"]
+    id: "angular-cli-install"
+  # build angular
+  - name: node:14
+    entrypoint: npm
+    args: ['run','ng','build']
+    dir: HTML
+    waitFor: ["dependencies-install", "angular-cli-install"]
+
+  # deploy angular
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "bash"
+    args:
+      [
+        "-c",
+        "gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy app.yaml --no-promote",
+      ]
+    dir: HTML
+    timeout: "1600s"
+  # [END cloudbuild_angular]
