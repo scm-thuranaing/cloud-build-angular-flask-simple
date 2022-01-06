@@ -97,7 +97,7 @@ steps:
 # [END cloudbuild_python_deploy_yaml]
 substitutions:
   _SERVICE_NAME: test-scm-google-cloud
-  _PUBSUB_VERIFICATION_TOKEN: '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
+  _PUBSUB_VERIFICATION_TOKEN: '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'
   _PUBSUB_TOPIC: 'scm-topic-06-01-2022'
   _GOOGLE_CLOUD_PROJECT: 'hybrid-cabinet-336703'
 # [END cloudbuild_python_yaml]
