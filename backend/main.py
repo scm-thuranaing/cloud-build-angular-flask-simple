@@ -53,7 +53,7 @@ def index():
 
     publisher.publish(topic_path, data=data)
 
-    return 'OK', 200
+    return 'Send', 200
 # [END gae_flex_pubsub_index]
 
 
