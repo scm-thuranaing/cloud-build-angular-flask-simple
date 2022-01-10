@@ -67,5 +67,5 @@ def subscribe(event, context):
         name = base64.b64decode(event['data']).decode('utf-8')
     else:
         name = 'World'
-    print('Hello {}! from pub/sub'.format(name))
+    print('Hello {}! from pub/sub again'.format(name))
 # [END functions_pubsub_subscribe]
