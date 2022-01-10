@@ -16,11 +16,11 @@
 steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     args:
-    - gcloud
-    - functions
-    - deploy
-    - hello_pubsub
-    - --region=asia-southeast1
-    - --source=./functions
-    - --trigger-topic=scm-topic-06-01-2022
-    - --runtime=python39
+      - gcloud
+      - functions
+      - deploy
+      - hello_pubsub
+      - --region=asia-southeast1
+      - --trigger-topic=scm-topic-06-01-2022
+      - --runtime=python39
+    dir: backend
