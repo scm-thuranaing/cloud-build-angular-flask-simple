@@ -67,5 +67,5 @@ def subscribe_from_cloud_run(event, context):
         name = base64.b64decode(event['data']).decode('utf-8')
     else:
         name = 'World'
-    print('Hello {}! again'.format(name))
+    print('Hello {}!'.format(name))
 # [END functions_pubsub_subscribe]
