@@ -23,4 +23,4 @@ steps:
       - --region=asia-southeast1
       - --trigger-topic=scm-topic-06-01-2022
       - --runtime=python39
-    dir: backend
+    dir: fuctions
