@@ -59,7 +59,7 @@ def publish(request):
 
 # [START functions_pubsub_subscribe]
 # Triggered from a message on a Cloud Pub/Sub topic.
-def subscribe(event, context):
+def subscribe_from_cloud_run(event, context):
     print("""This Function was triggered by messageId {} published at {} to {}
     """.format(context.event_id, context.timestamp, context.resource["name"]))
 

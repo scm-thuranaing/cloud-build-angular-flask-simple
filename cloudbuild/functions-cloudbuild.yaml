@@ -19,7 +19,7 @@ steps:
       - gcloud
       - functions
       - deploy
-      - hello_pubsub
+      - subscribe_from_cloud_run
       - --region=asia-southeast1
       - --trigger-topic=scm-topic-06-01-2022
       - --runtime=python39
